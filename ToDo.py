@@ -14,14 +14,22 @@ def AddItem() :
 
 #Takes a cursor selection from the listbox and deletes it from the listbox and flashes a infobox
 def DeleteItem():
-    ItemD = todoList.curselection()
+    ItemDCurSelect = todoList.curselection()
+    ItemD = todoList.get(ItemDCurSelect)
     messagebox.showinfo('Deleted!',f'{ItemD} Deleted')
-    todoList.delete(ItemD)
+    todoList.delete(ItemDCurSelect)
 
 def EditItem():
-    ItemE = todoList.curselection()
-    EIndex = todoList.index()
-    messagebox.showinfo('Position',f'{ItemE} is at position {EIndex}')
+    ItemECurSelect = todoList.curselection() # gets tuple of selected item in listbox
+    Eindex = list(ItemECurSelect) #converts tuple to list 
+    lbposition = Eindex[0] #returns the first item in list which will be the poisiton in the listbox
+    ItemE = todoList.get(ItemECurSelect) # returns the value of the position that is passed in
+    ItemEdit = TodoEntry.get()
+    todoList.insert(lbposition,ItemEdit)
+    todoList.delete(lbposition + 1)
+    messagebox.showinfo('Edit',f'{ItemE} Changed to {ItemEdit}')
+    #messagebox.showinfo('Position',f'{ItemE} is at position {lbposition}') 
+    
 
 
 #Install tkinter GUI as Main; give it a title and then set the size of the GUI 
