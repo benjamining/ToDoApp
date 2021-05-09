@@ -1,5 +1,5 @@
 import tkinter as tkinter
-from tkinter import messagebox
+from tkinter import messagebox,LEFT,BOTTOM,TOP,RIGHT
 
 #Fundtions for Todo List App
 
@@ -14,10 +14,13 @@ def AddItem() :
 
 #Takes a cursor selection from the listbox and deletes it from the listbox and flashes a infobox
 def DeleteItem():
-    ItemDCurSelect = todoList.curselection()
-    ItemD = todoList.get(ItemDCurSelect)
-    messagebox.showinfo('Deleted!',f'{ItemD} Deleted')
-    todoList.delete(ItemDCurSelect)
+    ItemDCurSelect = todoList.curselection()# gets tuple of selected item in listbox
+    if len(ItemDCurSelect) != 0: #checks if tuple is empty.. if not empty run below code
+        ItemD = todoList.get(ItemDCurSelect) # returns value of the postion that is passed in 
+        messagebox.showinfo('Deleted!',f'{ItemD} Deleted')# message to say item is deleted
+        todoList.delete(ItemDCurSelect) # deletes item that was selected
+    else : # if tuple is empty do the below code block
+        todoList.delete(0,'end') # deletes all items 
 
 def EditItem():
     ItemECurSelect = todoList.curselection() # gets tuple of selected item in listbox
@@ -35,33 +38,33 @@ def EditItem():
 #Install tkinter GUI as Main; give it a title and then set the size of the GUI 
 Main = tkinter.Tk()
 Main.title('To Do List')
-Main.geometry('300x400')
+Main.geometry('250x300')
 
 #initilise empty List called todo 
 todo = []
 
 #title heading
 todoTitle = tkinter.Label(Main, text='To Do List')
-todoTitle.pack()
+todoTitle.place()
 
 #Entry box for the todo list.
 TodoEntry = tkinter.Entry(Main, text='Enter an item')
-TodoEntry.pack()
+TodoEntry.place(x=50,y=10)
 
 #Add Button for the todo list
 todoAdd = tkinter.Button(Main, text='Add Item', command=AddItem)
-todoAdd.pack()
+todoAdd.place(x=10,y=50)
 
 #Delete Button for the todo list
 todoDelete = tkinter.Button(Main, text='Delete Item', command=DeleteItem)
-todoDelete.pack()
+todoDelete.place(x=80,y=50)
 
 #Edit Button for the todo list
 todoEdit = tkinter.Button(Main, text='Edit Item', command=EditItem)
-todoEdit.pack()
+todoEdit.place(x=160,y=50)
 
 #Listbox for the todo list
 todoList = tkinter.Listbox(Main)
-todoList.pack()
+todoList.place(x=50,y=100)
 
 Main.mainloop()
